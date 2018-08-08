@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import * as BooksAPI from '../BooksAPI'
 import '../App.css'
+import {Book} from './Book'
 
 
 export class Search extends React.Component {
@@ -13,10 +14,23 @@ export class Search extends React.Component {
 
     // Sempre que uma mudança ocorre no input, então o listBook recebe objetos
     updateQuery = (query) => {
-        this.setState({query})
+        this.setState({
+            query
+        })
+
         if (query.length > 0) {
             BooksAPI.search(query)
-            .then((books) => {this.setState({listBook: books})})
+                .then((books) => {
+                    this.setState({
+                        listBook: books
+                    })
+                })
+        }
+
+        if (query.length === 0) {
+            this.setState({
+                listBook: []
+            })
         }
     }
 
@@ -32,9 +46,26 @@ export class Search extends React.Component {
               </div>
               <div className="search-books-results">
                 <ol className="books-grid">
-                {/* TODO: precisa de um Array.map para exportar o que está na listbook */}
-                            {this.state.listBook.map((foundBook) => (
-                            <li key={foundBook.id}>{foundBook.title}</li>))}
+                {   this.state.listBook.length > 0 ? (
+                    <ol className="books-grid">
+                        {
+                            this.state.listBook.map((book) => (
+                            book.hasOwnProperty('imageLinks') ?
+                            (<li key={book.id}>
+                            <Book theBook={book.title}  authors={book.authors} image={book.imageLinks.thumbnail} />
+                            </li>) : 'null'
+                            ))
+                        }
+                    </ol>
+
+                        ) : (
+                        this.state.query.length > 0  && (
+                        <div>
+                        No search results.
+                        </div>
+                    )
+                )
+            }
                 </ol>
               </div>
             </div>
