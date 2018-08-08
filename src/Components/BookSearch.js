@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import * as BooksAPI from '../BooksAPI'
 import '../App.css'
 import {Book} from './Book'
@@ -10,6 +9,7 @@ export class Search extends React.Component {
     state = {
             query: '',
             listBook: []
+
     }
 
     // Sempre que uma mudança ocorre no input, então o listBook recebe objetos
@@ -21,9 +21,9 @@ export class Search extends React.Component {
         if (query.length > 0) {
             BooksAPI.search(query)
                 .then((books) => {
-                    this.setState({
-                        listBook: books
-                    })
+                        this.setState({
+                            listBook: books,
+                        })
                 })
         }
 
@@ -53,7 +53,7 @@ export class Search extends React.Component {
                             book.hasOwnProperty('imageLinks') ?
                             (<li key={book.id}>
                             <Book theBook={book.title}  authors={book.authors} image={book.imageLinks.thumbnail} />
-                            </li>) : 'null'
+                            </li>) : undefined
                             ))
                         }
                     </ol>
@@ -61,7 +61,7 @@ export class Search extends React.Component {
                         ) : (
                         this.state.query.length > 0  && (
                         <div>
-                        No search results.
+                        Não Encontrado
                         </div>
                     )
                 )
