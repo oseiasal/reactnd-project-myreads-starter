@@ -36,7 +36,7 @@ export class Search extends React.Component {
 
     render() {
         return (
-            <div className="search-books">
+            <div className="search-books" >
               <div className="search-books-bar">
               {/* TODO: Requer mudança no setState */}
                 <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
@@ -48,14 +48,12 @@ export class Search extends React.Component {
                 <ol className="books-grid">
                 {   this.state.listBook.length > 0 ? (
                     <ol className="books-grid">
-                        {
-                            this.state.listBook.map((book) => (
+                            {this.state.listBook.map((book) => (
                             book.hasOwnProperty('imageLinks') ?
-                            (<li key={book.id}>
-                            <Book theBook={book.title}  authors={book.authors} image={book.imageLinks.thumbnail} />
-                            </li>) : undefined
-                            ))
-                        }
+                            (
+                            <Book book={book} key={book.id}/>
+                            ) : undefined
+                            ))}
                     </ol>
 
                         ) : (
