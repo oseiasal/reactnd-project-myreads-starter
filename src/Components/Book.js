@@ -6,7 +6,7 @@ import * as BooksAPI from '../BooksAPI'
 export class Book extends React.Component {
     state = {
         shelves: [],
-        defaultValue: 'none' || this.state.defaultValue
+        defaultValue: 'none'
     }
 
     // Quero que o codiogo armazene o armario num array ou objetos
@@ -16,8 +16,6 @@ export class Book extends React.Component {
 
     listShelf() {
         return BooksAPI.getAll().then((data) => {
-            // console.log("Armario");
-            // console.log(data);
 
             this.setState({
                 shelves: data
@@ -27,11 +25,9 @@ export class Book extends React.Component {
                 return item.id === this.props.book.id;
 
             });
-            // console.log('Lugar armazenado');
-            // console.log(go);
 
-            go.length > 0 && console.log(go[0].shelf) && this.setState({defaultValue: go[0].shelf}, function () {
-                console.log('state was changed by setState');
+            go.length > 0 && this.setState({defaultValue: go[0].shelf}, function () {
+                console.log('the state was changed by setState');
             })
 
         })
