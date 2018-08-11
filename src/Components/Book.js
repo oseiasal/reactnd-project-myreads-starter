@@ -4,15 +4,56 @@ import '../App.css'
 import * as BooksAPI from '../BooksAPI'
 
 export class Book extends React.Component {
-    handleOnChange (event) {
-        const newShelf = event.target.value
-        const currentShelf = this.props.book.shelf
-        if (newShelf && newShelf !== currentShelf) {
-            BooksAPI.update({id: this.props.book.id}, newShelf).then(response => console.log(response))
-            }
+    state = {
+        shelves: [],
+        defaultValue: 'none' || this.state.defaultValue
+    }
+
+    // Quero que o codiogo armazene o armario num array ou objetos
+    // então, quando carregar o codigo, quero que ele deixe o value com o valor actualValue
+    // quero que ele busque esse valor dentro do arraobj e mude seu select actualValue
+    // sem que isso quebre a pagian
+
+    listShelf() {
+        return BooksAPI.getAll().then((data) => {
+            // console.log("Armario");
+            // console.log(data);
+
+            this.setState({
+                shelves: data
+            });
+
+            let go = this.state.shelves.filter(item => {
+                return item.id === this.props.book.id;
+
+            });
+            // console.log('Lugar armazenado');
+            // console.log(go);
+
+            go.length > 0 && console.log(go[0].shelf) && this.setState({defaultValue: go[0].shelf}, function () {
+                console.log('state was changed by setState');
+            })
+
+        })
+    }
+
+    handleOnChange(event) {
+        const changeValue = event.target.value
+        const actualValue = this.state.defaultValue
+
+        if (changeValue && changeValue !== actualValue) {
+            BooksAPI.update({id: this.props.book.id}, event.target.value)
+         }
+
+        this.setState({defaultValue: changeValue})
     }
 
     render(){
+        // TODO: Area de testes
+        this.listShelf();
+
+        const authors = this.props.book.authors || [];
+
         return (
             <li>
             <div className="book">
@@ -24,9 +65,9 @@ export class Book extends React.Component {
                     }}>
                     </div>
                         <div className="book-shelf-changer">
-                        <select value={this.props.book.shelf}
+                        <select value={this.state.defaultValue}
                                 onChange={this.handleOnChange.bind(this)}>
-                                <option value="" disabled>Move to...</option>
+                                <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
                                 <option value="read">Read</option>
@@ -34,8 +75,14 @@ export class Book extends React.Component {
                             </select>
                         </div>
                     </div>
-                    <div className="book-title">{this.props.book.theBook}</div>
-                    <div className="book-authors">{this.props.book.authors}</div>
+                    <div className="book-title">{this.props.book.title}</div>
+                    <div className="book-authors">
+                    {authors.map((author, index) => (
+                        <div key={index}>
+                            {author}
+                        </div>
+                    ))}
+                    </div>
                 </div>
             </li>
         )
