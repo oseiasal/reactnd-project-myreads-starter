@@ -9,12 +9,9 @@ export class Book extends React.Component {
         defaultValue: 'none'
     }
 
-    // Quero que o codiogo armazene o armario num array ou objetos
-    // então, quando carregar o codigo, quero que ele deixe o value com o valor actualValue
-    // quero que ele busque esse valor dentro do arraobj e mude seu select actualValue
-    // sem que isso quebre a pagian
+    // FIXME: A mudança de statu demora pra ser resolvida, colocar uma fnção didmount ou willmount
 
-    listShelf() {
+    componentDidMount() {
         return BooksAPI.getAll().then((data) => {
 
             this.setState({
@@ -46,7 +43,7 @@ export class Book extends React.Component {
 
     render(){
         // TODO: Area de testes
-        this.listShelf();
+        //this.listShelf();
 
         const authors = this.props.book.authors || [];
 
