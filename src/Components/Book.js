@@ -5,29 +5,14 @@ import * as BooksAPI from '../BooksAPI'
 
 export class Book extends React.Component {
     state = {
-        shelves: [],
         defaultValue: 'none'
     }
 
-    // FIXME: A mudança de statu demora pra ser resolvida, colocar uma fnção didmount ou willmount
-
     componentDidMount() {
-        return BooksAPI.getAll().then((data) => {
-
-            this.setState({
-                shelves: data
-            });
-
-            let go = this.state.shelves.filter(item => {
-                return item.id === this.props.book.id;
-
-            });
-
-            go.length > 0 && this.setState({defaultValue: go[0].shelf}, function () {
-                console.log('the state was changed by setState');
-            })
-
-        })
+        BooksAPI.get(this.props.book.id)
+        .then(a => this.setState({
+            defaultValue: a.shelf
+        }))
     }
 
     handleOnChange(event) {
@@ -42,9 +27,6 @@ export class Book extends React.Component {
     }
 
     render(){
-        // TODO: Area de testes
-        //this.listShelf();
-
         const authors = this.props.book.authors || [];
 
         return (
