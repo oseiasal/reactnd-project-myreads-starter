@@ -1,57 +1,41 @@
 import React from 'react'
-import * as BooksAPI from '../BooksAPI'
-import '../App.css'
+import PropTypes from 'prop-types'
 import {Book} from './Book'
-
+import { Link } from "react-router-dom";
 
 export class Search extends React.Component {
 
     state = {
-            query: '',
-            listBook: []
-
+            query: ''
     }
 
-    // Sempre que uma mudança ocorre no input, então o listBook recebe objetos
     updateQuery = (query) => {
+        this.props.updateQuery(query)
         this.setState({
             query
         })
-
-        if (query.length > 0) {
-            BooksAPI.search(query)
-                .then((books) => {
-                        this.setState({
-                            listBook: books,
-                        })
-                })
-        }
-
-        if (query.length === 0) {
-            this.setState({
-                listBook: []
-            })
-        }
     }
 
     render() {
         return (
             <div className="search-books" >
               <div className="search-books-bar">
-              {/* TODO: Requer mudança no setState */}
-                <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
+                <Link className="close-search" to="/">Close</Link>
                 <div className="search-books-input-wrapper">
-                  <input type="text" placeholder="Search by title or author" value={this.state.query} onChange={(event) => this.updateQuery(event.target.value)}/>
+                  <input type="text" placeholder="Search by title or author" value={this.state.query}
+                  onChange={(event) => this.updateQuery(event.target.value)}/>
                 </div>
               </div>
               <div className="search-books-results">
                 <ol className="books-grid">
-                {   this.state.listBook.length > 0 ? (
+                {   this.props.listBook.length > 0 ? (
                     <ol className="books-grid">
-                            {this.state.listBook.map((book) => (
+                            {this.props.listBook.map((book) => (
                             book.hasOwnProperty('imageLinks') ?
                             (
-                            <Book book={book} key={book.id}/>
+                            <Book book={book} key={book.id}
+                            changeShelf={this.props.changeShelf}
+                            />
                             ) : undefined
                             ))}
                     </ol>
@@ -70,3 +54,9 @@ export class Search extends React.Component {
         )
     }
 }
+
+Search.propTypes = {
+  listBook: PropTypes.array.isRequired,
+  updateQuery: PropTypes.func.isRequired,
+  changeShelf: PropTypes.func.isRequired
+};

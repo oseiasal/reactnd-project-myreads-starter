@@ -1,6 +1,5 @@
 import React from 'react'
-import '../App.css'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import * as BooksAPI from '../BooksAPI'
 
 export class Book extends React.Component {
@@ -9,8 +8,8 @@ export class Book extends React.Component {
         defaultValue: 'none'
     }
 
-    callMyName(event) {
-        this.props.callMyName(this.props.book, event.target.value)
+    changeShelf = (event) => {
+        this.props.changeShelf(this.props.book, event.target.value)
         this.setState({
             defaultValue: event.target.value
         })
@@ -24,6 +23,7 @@ export class Book extends React.Component {
     }
 
     render(){
+        const authors = this.props.book.authors || []
         return (
             <li>
             <div className="book">
@@ -36,7 +36,7 @@ export class Book extends React.Component {
                     </div>
                         <div className="book-shelf-changer">
                         <select value={this.state.defaultValue}
-                                onChange={this.callMyName.bind(this)}>
+                                onChange={this.changeShelf.bind(this)}>
                                 <option value="move" disabled>Move to...</option>
                                 <option value="currentlyReading">Currently Reading</option>
                                 <option value="wantToRead">Want to Read</option>
@@ -47,7 +47,7 @@ export class Book extends React.Component {
                     </div>
                     <div className="book-title">{this.props.book.title}</div>
                     <div className="book-authors">
-                    {this.props.book.authors.map((author, index) => (
+                    {authors.map((author, index) => (
                         <div key={index}>
                             {author}
                         </div>
@@ -58,3 +58,8 @@ export class Book extends React.Component {
         )
     }
 }
+
+Book.propTypes = {
+  book: PropTypes.object.isRequired,
+  changeShelf: PropTypes.func.isRequired
+};
