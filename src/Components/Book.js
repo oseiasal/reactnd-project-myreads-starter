@@ -15,11 +15,13 @@ export class Book extends React.Component {
         })
     }
 
-    componentDidMount() {
-        BooksAPI.get(this.props.book.id)
-        .then(a => this.setState({
-            defaultValue: a.shelf
-        }))
+    getShelfBook = (book) => {
+        this.props.getShelf(book.id)
+        .then(i => { this.setState({defaultValue: i.shelf})})
+    }
+
+    componentDidMount () {
+        this.getShelfBook(this.props.book)
     }
 
     render(){
