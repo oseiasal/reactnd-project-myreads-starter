@@ -9,7 +9,8 @@ class BooksApp extends React.Component {
 
     state = {
         books: [],
-        listBook:[]
+        listBook:[],
+        defaultValue: "none"
     }
 
     // Função base para a troca de book
@@ -43,7 +44,7 @@ class BooksApp extends React.Component {
     //Pega os livros, joga numa lista geral
     // depois filtra e separa por prateleira
 
-    componentWillMount(){
+    componentDidMount(){
         this.getAllBooks()
     }
 
@@ -60,8 +61,13 @@ filterByShelf = (shelf) => {
     return this.state.books.filter(i => shelf === i.shelf)
 }
 
+getShelf = (id) => {
+    return BooksAPI.get(id);
+}
 
 render() {
+    this.getAllBooks();
+
     return (
         <div className="app">
         <Route exact path="/" render={() => (
@@ -70,13 +76,13 @@ render() {
             <h1>MyReads</h1>
          </div>
               <Shelf shelfTitle="Currently Reading" shelf={this.filterByShelf('currentlyReading')}
-              changeShelf={this.changeShelf} key="1"/>
+              changeShelf={this.changeShelf} getShelf={this.getShelf} key="1"/>
 
               <Shelf shelfTitle="Want To Read" shelf={this.filterByShelf('wantToRead')}
-              changeShelf={this.changeShelf} key="2"/>
+              changeShelf={this.changeShelf}  getShelf={this.getShelf} key="2"/>
 
               <Shelf shelfTitle="Read" shelf={this.filterByShelf('read')}
-              changeShelf={this.changeShelf} key="3" />
+              changeShelf={this.changeShelf} getShelf={this.getShelf} key="3" />
 
              <div className="open-search">
                 <Link to="/search">Add a book</Link>
@@ -88,6 +94,7 @@ render() {
             <Route path="/search" render={() => (
 
                     <Search changeShelf={this.changeShelf}
+                    getShelf={this.getShelf}
                     updateQuery={this.updateQuery}
                     listBook={this.state.listBook} />
                )}
