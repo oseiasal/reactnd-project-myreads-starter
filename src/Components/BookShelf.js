@@ -15,7 +15,9 @@ export class Shelf extends React.Component {
                             {
 
                                 this.props.shelf.map(a => {
-                                    return <Book book={a} key={a.id} changeShelf={this.props.changeShelf} />
+                                    return <Book book={a} key={a.id}
+                                     getShelf={this.props.getShelf}
+                                     changeShelf={this.props.changeShelf} />
                                 })
 
                             }

@@ -33,7 +33,7 @@ export class Search extends React.Component {
                             {this.props.listBook.map((book) => (
                             book.hasOwnProperty('imageLinks') ?
                             (
-                            <Book book={book} key={book.id}
+                            <Book book={book} key={book.id} getShelf={this.props.getShelf}
                             changeShelf={this.props.changeShelf}
                             />
                             ) : undefined
