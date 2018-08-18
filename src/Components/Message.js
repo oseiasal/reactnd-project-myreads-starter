@@ -6,7 +6,7 @@ export class Message extends React.Component {
         value: 'none'
     }
 
-async getShelfBook (book) {
+ getShelfBook = (book) => {
         this.props.getShelf(book.id)
         .then(i => {
             this.setState({value: i.shelf})

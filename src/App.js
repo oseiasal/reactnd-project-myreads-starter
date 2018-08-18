@@ -13,14 +13,14 @@ class BooksApp extends React.Component {
         defaultValue: "none"
     }
 
-    // Função base para a troca de book
+    /* Função base para a troca de book */
     changeShelf = (book, newShelf) => {
         BooksAPI.update({id: book.id}, newShelf).then(() => {
         })
 
     }
 
-    // Realiza a pesquisa
+    /* Realiza a pesquisa */
     updateQuery = (query) => {
 
         this.setState({
@@ -41,8 +41,10 @@ class BooksApp extends React.Component {
         }
     }
 
-    //Pega os livros, joga numa lista geral
-    // depois filtra e separa por prateleira
+    /*
+        Pega os livros, joga numa lista geral
+        depois filtra e separa por prateleira
+    */
 
     componentDidMount(){
         this.getAllBooks()
@@ -56,11 +58,12 @@ class BooksApp extends React.Component {
         })
     })}
 
-
+/* Filtra os livros e retorna um array contendo os livros*/
 filterByShelf = (shelf) => {
     return this.state.books.filter(i => shelf === i.shelf)
 }
 
+/* Pega o livro de acordo com o id*/
 getShelf = (id) => {
     return BooksAPI.get(id);
 }

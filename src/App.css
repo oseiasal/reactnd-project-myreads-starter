@@ -180,12 +180,13 @@ body, .app {
 }
 
 .shelf-name p {
+    display: inline-block;
     margin: 0 auto;
     padding: 2px;
-    background: #FF5722;
+    background: #bfc9156b;
     width: 130px;
     height: 65px;
     font-size: 0.8em;
-    color: black;
+    color: #076712;
     font-weight: 900;
 }
