@@ -172,3 +172,20 @@ body, .app {
   text-align: center;
   font-size: 0.8em;
 }
+
+/* book message*/
+.shelf-name p::before {
+    content: '→ ';
+    display: inline;
+}
+
+.shelf-name p {
+    margin: 0 auto;
+    padding: 2px;
+    background: #FF5722;
+    width: 130px;
+    height: 65px;
+    font-size: 0.8em;
+    color: black;
+    font-weight: 900;
+}

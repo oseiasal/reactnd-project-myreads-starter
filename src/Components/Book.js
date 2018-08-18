@@ -26,7 +26,6 @@ export class Book extends React.Component {
     render(){
         const authors = this.props.book.authors || []
         return (
-            <li>
             <div className="book">
                 <div className="book-top">
                     <div className="book-cover" style={{
@@ -55,7 +54,6 @@ export class Book extends React.Component {
                     ))}
                     </div>
                 </div>
-            </li>
         )
     }
 }

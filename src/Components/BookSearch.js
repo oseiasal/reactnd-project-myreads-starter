@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {Book} from './Book'
+import {Message} from './Message'
 import { Link } from "react-router-dom";
 
 export class Search extends React.Component {
@@ -32,10 +33,13 @@ export class Search extends React.Component {
                     <ol className="books-grid">
                             {this.props.listBook.map((book) => (
                             book.hasOwnProperty('imageLinks') ?
-                            (
-                            <Book book={book} key={book.id} getShelf={this.props.getShelf}
+                            (<li key={book.id}>
+                            <Book book={book} getShelf={this.props.getShelf}
                             changeShelf={this.props.changeShelf}
                             />
+                            <Message book={book}
+                            getShelf={this.props.getShelf} />
+                            </li>
                             ) : undefined
                             ))}
                     </ol>
