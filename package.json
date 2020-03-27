@@ -1,5 +1,9 @@
 {
-  "homepage": "/build",
+  "homepage": ".",
+  "name": "my-reads",
+  "version": "1.1.0",
+  "author": {"name": "Oseias Alves do Nascimento", "email": "oseiasal@gmail.com"},
+  "private": false,
   "dependencies": {
     "prop-types": "^15.6.2",
     "react": "^16.3.2",
