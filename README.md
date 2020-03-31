@@ -1,4 +1,6 @@
 # MyReads Project
+## Para acessar o projeto sem precisar instalar
+https://oseiasal.github.io/reactnd-project-myreads-starter/
 
 ## Sobre o projeto
 O MyReads é uma aplicação feita com React JS, na qual realiza a função de listar e gerenciar livros que você tenha interesse em ler, que esteja lendo ou que tenha lido.
